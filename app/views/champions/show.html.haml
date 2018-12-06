@@ -1,5 +1,8 @@
 %h2
   = @champion.name
+%h3
+  Category:
+  = @champion.category.name
 #ChampionLooks
   %label
     Role:
@@ -14,6 +17,9 @@
     Health:
     = @champion.health
 
-= link_to "Edit", edit_champion_path(@champion), class: "btn btn-md btn-info"
-= link_to "Delete", champion_path(@champion), method: :delete, data:{confirm: "Are you sure?"}, class: "btn btn-md btn-danger"
-= link_to "Back to HomePage", root_path, class: "btn btn-danger  btn-lg"
+= link_to "Back to HomePage", root_path, class: "btn btn-success  btn-lg"
+
+- if user_signed_in?
+  - if @champion.user_id === current_user.id
+    = link_to "Edit", edit_champion_path(@champion), class: "btn btn-md btn-info"
+    = link_to "Delete", champion_path(@champion), method: :delete, data:{confirm: "Are you sure?"}, class: "btn btn-md btn-danger"

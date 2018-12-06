@@ -1,13 +1,20 @@
 class ChampionsController < ApplicationController
 
   before_action :find_champion , only: [:show, :destroy, :update, :edit]
-
+  skip_before_action :authenticate_user!, only: [:index, :show]
   def index
-    @champions = Champion.all.order(created_at: :desc)
+    if params[:category].blank?
+      @champions = Champion.all.order(created_at: :desc)
+    else
+      @category_id = Category.find_by(name: params[:category]).id
+      @champions = Champion.where(:category_id => @category_id).order("created_at DESC")
+    end
+
   end
 
   def new
-    @champion = Champion.new
+    @champion = current_user.champions.build
+    @categories = Category.all.map{|c| [c.name, c.id]} #this was used in champions/_form
   end
 
   def show
@@ -15,6 +22,7 @@ class ChampionsController < ApplicationController
   end
 
   def edit
+    @categories = Category.all.map{|c| [c.name, c.id]}
   end
 
   def destroy
@@ -23,6 +31,7 @@ class ChampionsController < ApplicationController
   end
 
   def update
+    @champion.category_id = params[:category_id]
     if @champion.update(champion_params)
       redirect_to champion_path(@champion)
     else
@@ -32,7 +41,8 @@ class ChampionsController < ApplicationController
 
 
   def create
-    @champion = Champion.new(champion_params)
+    @champion = current_user.champions.build(champion_params)
+    @champion.category_id = params[:category_id]
     if @champion.save
       redirect_to root_path
     else
@@ -45,7 +55,7 @@ class ChampionsController < ApplicationController
   private
 
   def champion_params
-    params.require(:champion).permit(:name, :role, :attack, :armor, :health)
+    params.require(:champion).permit(:name, :role, :attack, :armor, :health, :category_id)
   end
 
   def find_champion

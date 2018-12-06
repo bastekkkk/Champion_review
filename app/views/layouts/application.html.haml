@@ -16,23 +16,40 @@
   %body
     .navbar.navbar-default.navbar-static-top
       .container
-        %button.navbar-toggle(type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse")
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-        %a.navbar-brand(href="#") League of Legends Champions Review
-        .navbar-collapse.collapse.navbar-responsive-collapse
-          %ul.nav.navbar-nav
-            %li= link_to "Link 1", "/path1"
-            -# %li= link_to "Link 2", "/path2"
-            -# %li= link_to "Link 3", "/path3"
-            -# %li= link_to "Link 3", "/path3"
+        .navbar-header
+          = link_to "Champion reviw", root_path, class: "navbar-brand"
+        %ul.nav.navbar-nav
+          - if !current_user
+            %li
+              = link_to "Sign up", new_user_registration_path
+            %li
+              = link_to "Log in", new_user_session_path
+          - else
+            %li
+              = link_to "Sign out", destroy_user_session_path, method: :delete
+        %ul.nav.navbar-nav.navbar-right
+          %li.dropdown
+            %a.dropdown-toggle{:href => "#", data:{toggle: 'dropdown'} , role: "button", 'aria-expanded' => 'false'}
+              Categories
+              %span.caret
+              %ul.dropdown-menu{role: 'menu'}
+                - Category.all.each do |category|
+                  %li{class: "#{'active' if params[:category] == category.name}"}
+                    =link_to category.name, champions_path(category: category.name) #champions_path(category: category.name) category: category.name) THIS WILL WE SEE IN URL
+          - if current_user
+            %li
+              =link_to "Add champion", new_champion_path
+
+
+
+
 
     .container
       .row
         .col-lg-9
           = bootstrap_flash
           = yield
+
         -# .col-lg-3
         -#   .well.sidebar-nav
         -#     %h3 Sidebar

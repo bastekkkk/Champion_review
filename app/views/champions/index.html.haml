@@ -1,5 +1,11 @@
-- @champions.each do |champion|
-  %h2
-    =link_to champion.name, champion_path(champion)
+%h1.current-category{style: "text-align: center;"}
+  =params[:category]
+- if @champions.count <= 0
+  %h1
+    There are no champions added yet
+- else
+  - @champions.each do |champion|
+    %h2
+      =link_to champion.name, champion_path(champion)
 
 = link_to "Add Champion", new_champion_path(@champion), class: "btn btn-md btn-primary"
