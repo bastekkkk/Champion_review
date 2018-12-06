@@ -1,0 +1,19 @@
+%h2
+  = @champion.name
+#ChampionLooks
+  %label
+    Role:
+    = @champion.role
+  %label
+    Attack:
+    = @champion.attack
+  %label
+    Armor:
+    = @champion.armor
+  %label
+    Health:
+    = @champion.health
+
+= link_to "Edit", edit_champion_path(@champion), class: "btn btn-md btn-info"
+= link_to "Delete", champion_path(@champion), method: :delete, data:{confirm: "Are you sure?"}, class: "btn btn-md btn-danger"
+= link_to "Back to HomePage", root_path, class: "btn btn-danger  btn-lg"

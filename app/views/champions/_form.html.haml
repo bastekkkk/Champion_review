@@ -1,0 +1,7 @@
+= simple_form_for @champion do |f|
+  = f.input :name, label: "Champion name"
+  = f.input :role, label: 'Role'
+  = f.input :health ,as: :integer
+  = f.input :armor ,as: :integer
+  = f.input :attack ,as: :integer
+  = f.button :submit , class: "btn btn-primary btn-md"

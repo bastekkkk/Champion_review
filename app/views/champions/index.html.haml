@@ -1,0 +1,5 @@
+- @champions.each do |champion|
+  %h2
+    =link_to champion.name, champion_path(champion)
+
+= link_to "Add Champion", new_champion_path(@champion), class: "btn btn-md btn-primary"
