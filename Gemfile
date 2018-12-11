@@ -41,6 +41,7 @@ gem "twitter-bootstrap-rails"
 gem "font-awesome-rails"
 gem 'simple_form'
 gem 'devise'
+gem "paperclip", "~> 6.0.0"
 gem 'devise-bootstrap-views'
 
 group :development, :test do

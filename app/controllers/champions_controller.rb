@@ -23,6 +23,7 @@ class ChampionsController < ApplicationController
 
   def edit
     @categories = Category.all.map{|c| [c.name, c.id]}
+    p @categories
   end
 
   def destroy
@@ -43,7 +44,7 @@ class ChampionsController < ApplicationController
   def create
     @champion = current_user.champions.build(champion_params)
     @champion.category_id = params[:category_id]
-    if @champion.save
+    if @champion.save!
       redirect_to root_path
     else
       render 'new'
@@ -55,7 +56,7 @@ class ChampionsController < ApplicationController
   private
 
   def champion_params
-    params.require(:champion).permit(:name, :role, :attack, :armor, :health, :category_id)
+    params.require(:champion).permit(:name, :role, :attack, :armor, :health, :category_id, :champion_img)
   end
 
   def find_champion

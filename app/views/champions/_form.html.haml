@@ -1,5 +1,6 @@
 = simple_form_for @champion do |f|
   = select_tag(:category_id, options_for_select(@categories), prompt: "Select ad category ") #This is where "@categories = Category.all.map{|c| [c.name, c.id]}" is being used
+  = f.input :champion_img , as: :file
   = f.input :name, label: "Champion name"
   = f.input :role, label: 'Role'
   = f.input :health ,as: :integer

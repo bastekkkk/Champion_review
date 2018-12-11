@@ -4,8 +4,9 @@
   %h1
     There are no champions added yet
 - else
-  - @champions.each do |champion|
-    %h2
-      =link_to champion.name, champion_path(champion)
+  .row
+    .col-md-10
+      - @champions.each do |champion|
+        %a{:href => "/champions/#{champion.id}"}
+          = image_tag champion.champion_img.url(:champion_index), style: "margin-bottom: 1px;"  #this set
 
-= link_to "Add Champion", new_champion_path(@champion), class: "btn btn-md btn-primary"

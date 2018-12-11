@@ -1,10 +1,11 @@
 %h2
-  Edit Champion
+  Edit #{@champion.name}
 
-= simple_form_for @champion do |f|
+= simple_form_for @champion, html: {multipart: true} do |f|
   = f.select :category_id, @categories
+  = f.input :champion_img , as: :file
   = f.input :role, label: 'Role'
   = f.input :health ,as: :integer
   = f.input :armor ,as: :integer
   = f.input :attack ,as: :integer
-  = f.button :submit , class: "btn btn-primary btn-md"
+  = f.button :submit , class: "btn btn-md btn-success"
