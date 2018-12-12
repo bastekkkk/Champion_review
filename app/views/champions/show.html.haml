@@ -1,25 +1,79 @@
-%h2
-  = @champion.name
-%h3
-  Category:
-  = @champion.category.name
-#ChampionLooks
-  %label
-    Role:
-    = @champion.role
-  %label
-    Attack:
-    = @champion.attack
-  %label
-    Armor:
-    = @champion.armor
-  %label
-    Health:
-    = @champion.health
+.row
+  .container
+    .col-xs-3
+      = image_tag @champion.champion_img.url(:champion_show), class: "champion-show"
+    .col-xs-6
+      %h2
+        = @champion.name
+      %h3
+        = @champion.category.name
+      %h4
+        %label
+          Health:
+          = @champion.health
+        %label
+          Armor:
+          = @champion.armor
+        %label
+          Attack:
+          = @champion.attack
+      .links.btn-group
+        =link_to "Back", root_path, class: "btn btn-md btn-warning"
 
-= link_to "Back to HomePage", root_path, class: "btn btn-success  btn-lg"
+        - if user_signed_in?
+          - if @champion.user_id == current_user.id
+            = link_to "Edit", edit_champion_path(@champion), class: "btn btn-md btn-info"
+            = link_to "Delete", champion_path(@champion), method: :delete, data:{confirm: "Are you sure?"}, class: "btn btn-md btn-danger"
 
-- if user_signed_in?
-  - if @champion.user_id === current_user.id
-    = link_to "Edit", edit_champion_path(@champion), class: "btn btn-md btn-info"
-    = link_to "Delete", champion_path(@champion), method: :delete, data:{confirm: "Are you sure?"}, class: "btn btn-md btn-danger"
+.row
+  .col-md-4
+    .reviews
+      %h1
+        Reviews:
+      = render @champion.reviews #wynika to z konwencji do kazdego championa który posiada receznzje szuka w widokach recenzji pojedynczej a jezeli jest ich wiecej wypisuje dowolna ilosc
+      %br
+      %div
+        =link_to "Add review", new_champion_review_path(@champion), class: "btn btn-md btn-success"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-# %h2
+-#   = @champion.name
+-# %h3
+-#   Category:
+-#   = @champion.category.name
+-# .row
+-#   .col-md-4
+-#     %label
+-#       Role:
+-#       = @champion.role
+-#     %label
+-#       Attack:
+-#       = @champion.attack
+-#     %label
+-#       Armor:
+-#       = @champion.armor
+-#     %label
+-#       Health:
+-#       = @champion.health
+-#   .col-md-6
+-#     =link_to "Add review", new_champion_review_path(@champion)
+
+-# = link_to "Back to HomePage", root_path, class: "btn btn-success  btn-lg"
+
+-# - if user_signed_in?
+-#   - if @champion.user_id === current_user.id
+-#     = link_to "Edit", edit_champion_path(@champion), class: "btn btn-md btn-info"
+-#     = link_to "Delete", champion_path(@champion), method: :delete, data:{confirm: "Are you sure?"}, class: "btn btn-md btn-danger"

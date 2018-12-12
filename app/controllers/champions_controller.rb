@@ -7,7 +7,7 @@ class ChampionsController < ApplicationController
       @champions = Champion.all.order(created_at: :desc)
     else
       @category_id = Category.find_by(name: params[:category]).id
-      @champions = Champion.where(:category_id => @category_id).order("created_at DESC")
+      @champions = Champion.where(category_id: @category_id).order("created_at DESC")
     end
 
   end
@@ -18,12 +18,10 @@ class ChampionsController < ApplicationController
   end
 
   def show
-
   end
 
   def edit
     @categories = Category.all.map{|c| [c.name, c.id]}
-    p @categories
   end
 
   def destroy

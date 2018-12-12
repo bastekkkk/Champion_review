@@ -1,0 +1,12 @@
+.reviews-user{style: "margin-bottom: 50px;"}
+  %p
+    Rate:
+    = review.rating
+  %p.review-comment
+    Rate:
+    = review.comment
+  .links.btn-group
+    - if user_signed_in?
+      -if review.user_id == current_user.id
+        = link_to "Edit", edit_champion_review_path(review.champion, review), class: "btn btn-xs btn-info"
+        = link_to "Delete", champion_review_path(review.champion, review), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-xs btn-danger"

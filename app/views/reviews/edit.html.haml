@@ -1,0 +1,7 @@
+%h1
+  Edit Review
+
+= simple_form_for([@champion, @review]) do |f|
+  =f.input :rating
+  =f.input :comment
+  =f.button :submit, class: "btn btn-md btn-success"
