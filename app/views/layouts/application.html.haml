@@ -34,8 +34,8 @@
               %span.caret
               %ul.dropdown-menu{role: 'menu'}
                 - Category.all.each do |category|
-                  %li{class: "#{'active' if params[:category] == category.name}"}
-                    =link_to category.name, champions_path(category: category.name) #champions_path(category: category.name) category: category.name) THIS WILL WE SEE IN URL
+                  %li{class: "#{'active' if params[:lane] == category.name}"}
+                    =link_to category.name, champions_path(lane: category.name) #champions_path(category: category.name) category: category.name) THIS WILL WE SEE IN URL
           - if current_user
             %li
               =link_to "Add champion", new_champion_path

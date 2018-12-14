@@ -3,25 +3,27 @@ class ChampionsController < ApplicationController
   before_action :find_champion , only: [:show, :destroy, :update, :edit]
   skip_before_action :authenticate_user!, only: [:index, :show]
   def index
-    if params[:category].blank?
-      @champions = Champion.all.order(created_at: :desc)
+    if params[:lane].blank?
+      #@champions = Champion.all.order(created_at: :desc)
+      @champions = Champion.all.last_created
     else
-      @category_id = Category.find_by(name: params[:category]).id
-      @champions = Champion.where(category_id: @category_id).order("created_at DESC")
+      @category_id = Category.find_by(name: params[:lane]).id
+      #@champions = Champion.where(category_id: @category_id).order("created_at DESC") #without scope
+      @champions = Champion.where(category_id: @category_id).last_created #with scopre
     end
 
   end
 
   def new
     @champion = current_user.champions.build
-    @categories = Category.all.map{|c| [c.name, c.id]} #this was used in champions/_form
+    @categories = Category.map{|c| [c.name, c.id]} #this was used in champions/_form
   end
 
   def show
   end
 
   def edit
-    @categories = Category.all.map{|c| [c.name, c.id]}
+    @categories = Category.map{|c| [c.name, c.id]}
   end
 
   def destroy
