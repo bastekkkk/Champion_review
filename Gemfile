@@ -60,6 +60,7 @@ group :development do
   gem "binding_of_caller"
   gem 'guard'
   gem 'guard-livereload', '~> 2.5', require: false
+  gem 'pry-rails'
 end
 
 group :test do
