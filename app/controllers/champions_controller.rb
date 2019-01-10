@@ -7,7 +7,7 @@ class ChampionsController < ApplicationController
       #@champions = Champion.all.order(created_at: :desc)
       @champions = Champion.all.last_created
     else
-      @category_id = Category.find_by(name: params[:lane]).id
+      @category_id = Category.find_by(name: params[:lane])
       #@champions = Champion.where(category_id: @category_id).order("created_at DESC") #without scope
       @champions = Champion.where(category_id: @category_id).last_created #with scopre
     end
@@ -16,14 +16,14 @@ class ChampionsController < ApplicationController
 
   def new
     @champion = current_user.champions.build
-    @categories = Category.map{|c| [c.name, c.id]} #this was used in champions/_form
+    @categories = Category.all.map{|c| [c.name, c.id]} #this was used in champions/_form
   end
 
   def show
   end
 
   def edit
-    @categories = Category.map{|c| [c.name, c.id]}
+    @categories = Category.all.map{|c| [c.name, c.id]}
   end
 
   def destroy
@@ -32,7 +32,6 @@ class ChampionsController < ApplicationController
   end
 
   def update
-    @champion.category_id = params[:category_id]
     if @champion.update(champion_params)
       redirect_to champion_path(@champion)
     else
